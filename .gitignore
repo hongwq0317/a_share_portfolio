@@ -1,2 +1,14 @@
-./portfolio_config_bak.yaml
 .DS_Store
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.pyw
+*.pyz
+*.pywz
+*.pyzz
+portfolio_config_bak.yaml
+logs/
+data/
+reports/
