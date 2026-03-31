@@ -9,6 +9,6 @@ __pycache__/
 *.pywz
 *.pyzz
 portfolio_config_bak.yaml
-logs/
-data/
-reports/
+logs/*
+data/*
+reports/*
