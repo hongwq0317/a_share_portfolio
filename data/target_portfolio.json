@@ -1,0 +1,55 @@
+{
+  "updated_at": "2026-03-04T14:18:18.878888",
+  "targets": {
+    "600309": {
+      "name": "万华化学",
+      "sector": "化工",
+      "target_weight": 6.0
+    },
+    "300274": {
+      "name": "阳光电源",
+      "sector": "新能源",
+      "target_weight": 7.0
+    },
+    "600036": {
+      "name": "招商银行",
+      "sector": "金融",
+      "target_weight": 9.8
+    },
+    "002371": {
+      "name": "北方华创",
+      "sector": "科技/AI",
+      "target_weight": 9.5
+    },
+    "300308": {
+      "name": "中际旭创",
+      "sector": "科技/AI",
+      "target_weight": 11.4
+    },
+    "300476": {
+      "name": "胜宏科技",
+      "sector": "科技/AI",
+      "target_weight": 6.1
+    },
+    "601138": {
+      "name": "工业富联",
+      "sector": "科技/AI",
+      "target_weight": 7.4
+    },
+    "601857": {
+      "name": "中国石油",
+      "sector": "石油",
+      "target_weight": 8.0
+    },
+    "601899": {
+      "name": "紫金矿业",
+      "sector": "有色金属",
+      "target_weight": 5.6
+    },
+    "603993": {
+      "name": "洛阳钼业",
+      "sector": "有色金属",
+      "target_weight": 5.8
+    }
+  }
+}

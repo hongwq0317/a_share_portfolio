@@ -1,0 +1,180 @@
+# A股组合投资系统配置
+
+models:
+  # 研究分析模型（市场分析、选股）
+  research: "openai:ep-20251219111602-7nqgk"
+  research_max_tokens: 16000
+  research_temperature: 0.4
+  # 决策模型（组合构建、风控）
+  decision: "openai:ep-20251219111602-7nqgk"
+  decision_max_tokens: 16000
+  decision_temperature: 0.1
+  # 压缩/摘要模型
+  compression: "openai:ep-20251219111602-7nqgk"
+  compression_max_tokens: 10000
+  compression_temperature: 0
+  # 报告模型
+  report: "openai:ep-20251219111602-7nqgk"
+  report_max_tokens: 32000
+  report_temperature: 0.25
+  # 通用
+  base_url: "http://ark.cn-beijing.volces.com/api/v3"
+  temperature: 0.2
+
+# API Keys
+api_keys:
+  OPENAI_API_KEY: "dc02f644-ec06-499b-bd3b-69266edd315c"
+  ANTHROPIC_API_KEY: "sk-gaTUVZAqi6SHRJyU2140F2F2Fa6c43Fa8e6d3661B7063323"
+  VOLCANO_API_KEY: "dc02f644-ec06-499b-bd3b-69266edd315c"
+get_api_keys_from_config: true
+# 节点开关
+nodes:
+  enable_market_data: true
+  enable_market_analysis: true
+  enable_stock_screening: true
+  enable_portfolio_strategy: true
+  enable_risk_assessment: true
+  enable_trade_execution: true
+  enable_rebalance_monitor: false
+  # 压缩开关
+  enable_analysis_compression: false
+  enable_strategy_compression: false
+
+# ReAct 参数
+react:
+  max_iterations: 8
+  screening_max_iterations: 12
+  strategy_max_iterations: 10
+  trade_max_iterations: 20
+
+# 组合策略配置
+portfolio:
+  # 初始资金（元）
+  initial_capital: 1000000
+  # 最大持仓股票数
+  max_positions: 10
+  # 单股最大仓位（激进：允许更集中持仓）
+  max_single_weight: 0.20
+  # 单行业最大仓位（激进：允许更高行业集中度）
+  max_sector_weight: 0.45
+  # 最小交易金额（元）
+  min_trade_amount: 5000
+  # 策略风格: aggressive | balanced | conservative
+  style: "aggressive"
+  # 再平衡触发偏离度（%）
+  rebalance_threshold: 8.0
+  # 基准指数
+  benchmark: "000300"
+  # 最低现金比例（即使激进也保留流动性缓冲）
+  min_cash_ratio: 0.05
+  # 两股最大相关系数阈值（超过则合计权重受限）
+  max_correlation: 0.85
+  # 单次最大换仓率（卖出+买入/总资产，防止频繁交易）
+  max_turnover_rate: 0.30
+  # 单行业最多持仓股票数
+  max_sector_stocks: 3
+  # 最小调仓阈值（%）：权重偏离低于此值不调仓，避免频繁微调
+  min_rebalance_deviation: 2.0
+
+# 风险控制配置
+risk:
+  # 单股止损线（%）（激进：给予更大波动容忍度）
+  stop_loss_pct: -12.0
+  # 单股止盈线（%）（激进：让利润充分奔跑）
+  take_profit_pct: 50.0
+  # 组合最大回撤（%）（激进：接受更高回撤）
+  max_drawdown_pct: -20.0
+  # 日 VaR 限额（95%置信度，占总资产%）
+  var_limit_pct: 3.0
+  # 波动率目标（年化%）
+  volatility_target: 22.0
+  # 最大杠杆
+  max_leverage: 1.0
+  # 流动性过滤：最小日均成交额（万元）
+  min_daily_turnover: 1000
+  # 排除 ST/*ST 股票
+  exclude_st: true
+  # 要求盈利（排除最近年报亏损股）
+  require_profit: true
+  # 最小总市值（亿元）
+  min_market_cap_billion: 50
+  # 追踪止损（从最高点回撤%触发），仅作为关注信号，非强制卖出
+  # 注意：追踪止损只是辅助参考，只有硬止损(stop_loss_pct)才触发强制卖出
+  trailing_stop_pct: 15.0
+  # 追踪止损最低生效天数（持仓不足此天数不触发追踪止损）
+  trailing_stop_min_hold_days: 5
+
+# 交易配置
+trading:
+  # 模式: simulation | live
+  mode: "simulation"
+  # 券商 API 类型（预留）
+  broker_api: ""
+  # 交易费率
+  commission_rate: 0.0003
+  # 印花税率（卖出时）
+  stamp_duty_rate: 0.0005
+  # 滑点（%）
+  slippage_pct: 0.1
+
+# 调度配置
+schedule:
+  # 交易日运行时间
+  market_open: "09:30"
+  market_close: "15:00"
+  # 分析运行时间
+  analysis_time: "08:30"
+  # 收盘后汇总时间
+  summary_time: "15:30"
+  # 再平衡检查频率: daily | weekly | monthly
+  rebalance_frequency: "weekly"
+
+# 调仓触发条件（程序化判断是否需要调仓，有持仓时使用）
+rebalance_triggers:
+  # 任意持仓盈亏超此阈值即触发（%）
+  pnl_threshold: 15.0
+  # 任意持仓权重偏离目标超此阈值即触发（%）
+  deviation_threshold: 8.0
+  # 持仓距上次调仓超过此天数，即使偏离不大也触发全面评估
+  max_hold_days: 30
+  # 市场大盘单日涨跌幅超此阈值触发检查（%）
+  market_shock_pct: 3.0
+  # 现金比例低于此值触发评估（防止过度满仓）
+  min_cash_alert: 0.03
+
+# 数据源配置（ChinaLin 内部行情 API）
+data_source:
+  chinalin_base_url: "https://chinalintest.wenxingonline.com"
+  http_timeout: 10
+  max_response_chars: 50000
+
+# 搜索工具配置
+search:
+  # 搜索引擎: chinalin | tavily
+  engine: "chinalin"
+  max_results: 5
+  timeout: 30
+  # --- Chinalin 引擎配置 ---
+  chinalin_base_url: "http://api-test.chinalions.cn"
+  chinalin_api_key: ""
+  # --- Tavily 引擎配置 ---
+  # api_key 可通过环境变量注入: ${TAVILY_API_KEY}
+  tavily_api_key: "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"
+  # topic 可选: general | news | finance
+  tavily_topic: "finance"
+  tavily_include_raw_content: false
+  # --- 搜索结果 LLM 摘要配置 ---
+  enable_summarization: true
+  # 摘要模型（留空则使用 models.compression）
+  summarization_model: ""
+  # 摘要模型 API 地址（留空则使用 models.base_url）
+  summarization_model_base_url: ""
+  summarization_model_max_tokens: 8192
+  # 送入摘要前的最大字符数
+  max_content_length: 50000
+  max_structured_output_retries: 1
+
+# 日志配置
+logging:
+  detail_level: "full"
+  file_mode: "a"
