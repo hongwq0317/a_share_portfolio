@@ -2,30 +2,30 @@
 
 models:
   # 研究分析模型（市场分析、选股）
-  research: "openai:ep-20251219111602-7nqgk"
+  research: "modelID"
   research_max_tokens: 16000
   research_temperature: 0.4
   # 决策模型（组合构建、风控）
-  decision: "openai:ep-20251219111602-7nqgk"
+  decision: "modelID"
   decision_max_tokens: 16000
   decision_temperature: 0.1
   # 压缩/摘要模型
-  compression: "openai:ep-20251219111602-7nqgk"
+  compression: "modelID"
   compression_max_tokens: 10000
   compression_temperature: 0
   # 报告模型
-  report: "openai:ep-20251219111602-7nqgk"
+  report: "modelID"
   report_max_tokens: 32000
   report_temperature: 0.25
   # 通用
-  base_url: "http://ark.cn-beijing.volces.com/api/v3"
+  base_url: "apiBaseUrl"
   temperature: 0.2
 
 # API Keys
 api_keys:
-  OPENAI_API_KEY: "dc02f644-ec06-499b-bd3b-69266edd315c"
-  ANTHROPIC_API_KEY: "sk-gaTUVZAqi6SHRJyU2140F2F2Fa6c43Fa8e6d3661B7063323"
-  VOLCANO_API_KEY: "dc02f644-ec06-499b-bd3b-69266edd315c"
+  OPENAI_API_KEY: "apiKey"
+  ANTHROPIC_API_KEY: "apiKey"
+  VOLCANO_API_KEY: "apiKey"
 get_api_keys_from_config: true
 # 节点开关
 nodes:
@@ -144,22 +144,19 @@ rebalance_triggers:
 
 # 数据源配置（ChinaLin 内部行情 API）
 data_source:
-  chinalin_base_url: "https://chinalintest.wenxingonline.com"
+  chinalin_base_url: "行情API地址"
   http_timeout: 10
   max_response_chars: 50000
 
 # 搜索工具配置
 search:
-  # 搜索引擎: chinalin | tavily
-  engine: "chinalin"
+  # 搜索引擎: tavily
+  engine: "tavily"
   max_results: 5
   timeout: 30
-  # --- Chinalin 引擎配置 ---
-  chinalin_base_url: "http://api-test.chinalions.cn"
-  chinalin_api_key: ""
   # --- Tavily 引擎配置 ---
   # api_key 可通过环境变量注入: ${TAVILY_API_KEY}
-  tavily_api_key: "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"
+  tavily_api_key: "apiKey"
   # topic 可选: general | news | finance
   tavily_topic: "finance"
   tavily_include_raw_content: false
